@@ -1,5 +1,9 @@
 # sheets
 
+
+![logo](docs/assets/logo.png)
+
+
 A fast, memory-efficient CSV and tabular data toolkit for Lua.
 
 Built on top of libcsv with a hybrid architecture:
