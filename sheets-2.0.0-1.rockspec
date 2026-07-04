@@ -36,6 +36,8 @@ description = {
       - Analytics workloads
       - CSV-heavy backend systems
       - Machine learning workflows
+
+      Documentation: https://nnengine.github.io/sheets/
    ]],
 
    homepage = "https://github.com/NNEngine",
