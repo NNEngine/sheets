@@ -1,7 +1,10 @@
 # sheets
 
 
-![logo](docs/assets/logo.png)
+<p align="center">
+  <img src="docs/assets/logo.png" alt="Logo" width="200"/>
+</p>
+
 
 
 A fast, memory-efficient CSV and tabular data toolkit for Lua.
