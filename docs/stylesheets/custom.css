@@ -1,0 +1,354 @@
+/* sheets Custom Theme Styling */
+
+:root {
+  --primary-color: #2c3e50;
+  --accent-color: #e74c3c;
+  --success-color: #27ae60;
+  --info-color: #3498db;
+  --warning-color: #f39c12;
+}
+
+/* Hero Section */
+.hero-section {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  padding: 3rem 2rem;
+  border-radius: 8px;
+  margin: 2rem 0;
+  text-align: center;
+}
+
+.hero-section h2 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+.hero-section p {
+  font-size: 1.1rem;
+  opacity: 0.95;
+  line-height: 1.6;
+}
+
+/* Features Grid */
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+  margin: 2rem 0;
+}
+
+.features-grid .admonition {
+  border-left: 4px solid var(--accent-color);
+  transition: all 0.3s ease;
+}
+
+.features-grid .admonition:hover {
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  transform: translateY(-2px);
+}
+
+/* Comparison Tables */
+.comparison-table {
+  margin: 2rem 0;
+  overflow-x: auto;
+}
+
+.comparison-table table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.95rem;
+}
+
+.comparison-table thead {
+  background: linear-gradient(to right, #667eea, #764ba2);
+  color: white;
+}
+
+.comparison-table th {
+  padding: 1rem;
+  text-align: left;
+  font-weight: 600;
+}
+
+.comparison-table td {
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.comparison-table tbody tr:nth-child(even) {
+  background-color: #f8f9fa;
+}
+
+.comparison-table tbody tr:hover {
+  background-color: #f0f4ff;
+}
+
+/* Stats Row */
+.stats-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 2rem;
+  margin: 2rem 0;
+}
+
+.stat-box {
+  text-align: center;
+  padding: 1.5rem;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+
+.stat-box:hover {
+  border-color: var(--accent-color);
+  box-shadow: 0 4px 12px rgba(231, 76, 60, 0.1);
+}
+
+.stat-number {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--accent-color);
+  margin-bottom: 0.5rem;
+}
+
+.stat-label {
+  font-size: 0.95rem;
+  color: #666;
+  font-weight: 500;
+}
+
+/* Code Blocks */
+/* [data-md-color-scheme="slate"] .md-typeset code { */
+/*   background-color: #111827; */
+/*   color: #e5e7eb; */
+/*   padding: 0.1rem 0.4rem; */
+/*   border-radius: 3px; */
+/*   font-family: 'Fira Code', monospace; */
+/*   font-size: 0.9em; */
+/* } */
+
+/* [data-md-color-scheme="slate"] .md-typeset pre { */
+/*   background-color: #111827; */
+/*   border-left: 4px solid #ff5252; */
+/* } */
+
+/* Admonitions */
+.md-typeset .admonition {
+  border-left-width: 4px;
+  border-radius: 4px;
+}
+
+.md-typeset .admonition.note {
+  border-left-color: var(--info-color);
+  background-color: rgba(52, 152, 219, 0.05);
+}
+
+.md-typeset .admonition.info {
+  border-left-color: var(--info-color);
+  background-color: rgba(52, 152, 219, 0.05);
+}
+
+.md-typeset .admonition.success {
+  border-left-color: var(--success-color);
+  background-color: rgba(39, 174, 96, 0.05);
+}
+
+.md-typeset .admonition.warning {
+  border-left-color: var(--warning-color);
+  background-color: rgba(243, 156, 18, 0.05);
+}
+
+.md-typeset .admonition.check {
+  border-left-color: var(--success-color);
+  background-color: rgba(39, 174, 96, 0.05);
+}
+
+/* Tabs */
+.md-typeset .tabbed-set {
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+.md-typeset .tabbed-set > label {
+  font-weight: 500;
+}
+
+/* Links */
+.md-typeset a {
+  color: var(--accent-color);
+  transition: color 0.2s ease;
+}
+
+.md-typeset a:hover {
+  color: #c0392b;
+  text-decoration: underline;
+}
+
+/* Blockquotes */
+.md-typeset blockquote {
+  border-left: 4px solid var(--accent-color);
+  padding-left: 1.5rem;
+  margin-left: 0;
+  font-style: italic;
+  color: #555;
+}
+
+/* Headings */
+.md-typeset h1 {
+  color: var(--primary-color);
+  border-bottom: 2px solid var(--accent-color);
+  padding-bottom: 0.5rem;
+}
+
+.md-typeset h2 {
+  color: var(--primary-color);
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+}
+
+.md-typeset h3 {
+  color: #34495e;
+}
+
+/* API Reference Styling */
+.api-signature {
+  background-color: #f5f7fa;
+  border-left: 3px solid var(--accent-color);
+  padding: 1rem;
+  margin: 1rem 0;
+  border-radius: 4px;
+  font-family: 'Fira Code', monospace;
+  overflow-x: auto;
+}
+
+.api-parameter {
+  margin-top: 1.5rem;
+  padding-left: 1rem;
+}
+
+.api-parameter-name {
+  font-weight: 600;
+  color: var(--primary-color);
+  font-family: 'Fira Code', monospace;
+}
+
+.api-parameter-type {
+  color: #7b68ee;
+  font-size: 0.9rem;
+  font-family: 'Fira Code', monospace;
+}
+
+.api-parameter-desc {
+  margin-top: 0.5rem;
+  color: #555;
+  line-height: 1.6;
+}
+
+/* Return Value */
+.api-return {
+  background-color: #f0fdf4;
+  border-left: 3px solid var(--success-color);
+  padding: 1rem;
+  margin: 1rem 0;
+  border-radius: 4px;
+}
+
+.api-return-title {
+  font-weight: 600;
+  color: var(--success-color);
+  margin-bottom: 0.5rem;
+}
+
+/* Examples */
+.example-block {
+  background-color: #faf9f6;
+  border: 1px solid #e8e3d3;
+  padding: 1.5rem;
+  border-radius: 6px;
+  margin: 1.5rem 0;
+}
+
+.example-title {
+  font-weight: 600;
+  color: var(--primary-color);
+  margin-bottom: 1rem;
+  font-size: 0.95rem;
+}
+
+/* Breadcrumbs */
+.md-breadcrumbs {
+  margin-bottom: 1.5rem;
+}
+
+.md-breadcrumbs a {
+  color: var(--accent-color);
+}
+
+/* Footer Enhancements */
+.md-footer {
+  background-color: var(--primary-color);
+}
+
+.md-footer a {
+  color: white;
+  transition: opacity 0.2s ease;
+}
+
+.md-footer a:hover {
+  opacity: 0.8;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .hero-section h2 {
+    font-size: 1.8rem;
+  }
+
+  .hero-section {
+    padding: 2rem 1.5rem;
+  }
+
+  .stats-row {
+    grid-template-columns: 1fr;
+  }
+
+  .features-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Dark Mode Support */
+[data-md-color-scheme="slate"] {
+  --primary-color: #eceff1;
+  --accent-color: #ff5252;
+}
+
+[data-md-color-scheme="slate"] .hero-section {
+  background: linear-gradient(135deg, #455a64 0%, #37474f 100%);
+}
+
+[data-md-color-scheme="slate"] .comparison-table tbody tr:nth-child(even) {
+  background-color: #263238;
+}
+
+[data-md-color-scheme="slate"] .comparison-table tbody tr:hover {
+  background-color: #37474f;
+}
+
+[data-md-color-scheme="slate"] .stat-box {
+  border-color: #455a64;
+  background-color: #37474f;
+}
+
+[data-md-color-scheme="slate"] .api-signature {
+  background-color: #263238;
+  color: #eceff1;
+}
+
+[data-md-color-scheme="slate"] .example-block {
+  background-color: #263238;
+  border-color: #455a64;
+}

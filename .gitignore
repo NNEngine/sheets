@@ -1,0 +1,54 @@
+# Shared libraries / build artifacts
+*.so
+*.o
+*.obj
+*.a
+*.lib
+*.dll
+*.dylib
+*.exe
+*.out
+
+# Build directories
+build/
+dist/
+
+# LuaRocks
+*.rock
+*.rockspec.bak
+lua_modules/
+rocks/
+.luarocks/
+
+# Benchmarks
+benchmark_*.csv
+
+# Editors / IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Coverage / Testing
+.coverage
+.luacov
+coverage/
+coverage.out
+test/fixtures/_tmp*
+test/fixtures/*.generated.csv
+*.log
+
+# Python cache (optional)
+__pycache__/
+*.pyc
+
+# Env files
+.env
+.env.local
+
+# Temporary files
+*.tmp
+*.bak
+*.orig
