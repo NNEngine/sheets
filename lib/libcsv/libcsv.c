@@ -323,26 +323,6 @@ static int csv_increase_buffer(struct csv_parser *p)
 }
 
 
-/*
-This is the heart of the library — the main CSV parsing function.
-It's a state machine that processes input character by character.
-
-
-Function Signature:
-| Parameter | Meaning                                                                                       |
-| --------- | --------------------------------------------------------------------------------------------- |
-| `p`       | Parser state object                                                                           |
-| `s`       | Pointer to input data (can be binary — cast to `unsigned char`)                               |
-| `len`     | Number of bytes to process                                                                    |
-| `cb1`     | **Field callback**: called when a field is complete (`void *data, size_t len, void *context`) |
-| `cb2`     | **Row callback**: called when a row ends (`int terminator, void *context`)                    |
-| `data`    | User context pointer passed through to callbacks                                              |
-Returns: Number of bytes successfully processed. If less than len, an error occurred.
-
-
-
-
-*/
 size_t csv_parse(struct csv_parser *p, const void *s, size_t len, void (*cb1)(void *, size_t, void *), void (*cb2)(int c, void *), void *data)
 {
   assert(p && "received null csv_parser");
@@ -494,55 +474,18 @@ size_t csv_parse(struct csv_parser *p, const void *s, size_t len, void (*cb1)(vo
 }
 
 
-/*
-This is a convenience wrapper around csv_write2 that uses the default double-quote character (").
-
-It simply forwards all arguments to csv_write2, hardcoding the quote character as CSV_QUOTE
-(which is 0x22 = " from the header).
-
-Why It Exists: Ease of use. Most CSV files use standard double quotes, so this saves you from
-typing the quote parameter every time:
-*/
 size_t csv_write(void *dest, size_t dest_size, const void *src, size_t src_size)
 {
   return csv_write2(dest, dest_size, src, src_size, CSV_QUOTE);
 }
 
-/*
-It forwards all arguments to csv_fwrite2, hardcoding the quote character
-as the standard double-quote (CSV_QUOTE = 0x22 = ").
 
-| Parameter   | Passed Through? | Meaning                  |
-| ----------- | --------------- | ------------------------ |
-| `fp`        | 1               | File pointer to write to |
-| `src`       | 1               | Input data to wrap       |
-| `src_size`  | 1               | Length of input data     |
-| `CSV_QUOTE` | 0 (hardcoded)   | Quote character = `"`    |
-
-Why It Exists: Same rationale as csv_write — most CSV files use standard
-               double quotes, so this saves typing
-
-*/
 int csv_fwrite(FILE *fp, const void *src, size_t src_size)
 {
   return csv_fwrite2(fp, src, src_size, CSV_QUOTE);
 }
 
-/*
-This is the core CSV serialization function — it takes raw data and wraps it in CSV quotes,
-escaping any quote characters inside by doubling them. It can either write to a buffer or
-just count how many bytes would be needed.
 
-| Parameter   | Purpose                                     |
-| ----------- | ------------------------------------------- |
-| `dest`      | Output buffer (can be `NULL` to count only) |
-| `dest_size` | Size of output buffer                       |
-| `src`       | Input data to quote-wrap                    |
-| `src_size`  | Length of input data                        |
-| `quote`     | Quote character to use (e.g., `"` or `'` )  |
-Returns: Total number of characters needed for the fully quoted output.
-
-*/
 size_t csv_write2(void *dest, size_t dest_size, const void *src, size_t src_size, unsigned char quote)
 {
   unsigned char *cdest = dest;
@@ -580,39 +523,7 @@ size_t csv_write2(void *dest, size_t dest_size, const void *src, size_t src_size
 }
 
 
-/*
-This is the file-stream version of CSV serialization — it writes quoted data directly to a
-FILE * instead of a memory buffer. It follows the same escaping rules as csv_write2 but with
-a simpler API since file streams handle their own memory.
 
-| Parameter  | Purpose                                   |
-| ---------- | ----------------------------------------- |
-| `fp`       | File pointer to write to (`fopen` result) |
-| `src`      | Input data to quote-wrap                  |
-| `src_size` | Length of input data                      |
-| `quote`    | Quote character to use                    |
-
-Returns: 0 on success, EOF (typically -1) on any write error.
-
-Example walkthrough:
-Input: say "hi" (8 bytes)
-Quote: "
-File: already open
-
-| Step          | `fputc` writes | Stream contents |
-| ------------- | -------------- | --------------- |
-| Opening quote | `"`            | `"`             |
-| `s`           | `s`            | `"s`            |
-| `a`           | `a`            | `"sa`           |
-| `y`           | `y`            | `"say`          |
-| ` ` (space)   | ` `            | `"say `         |
-| `"` (escape)  | `"`            | `"say "`        |
-| `"` (actual)  | `"`            | `"say """`      |
-| `h`           | `h`            | `"say ""h`      |
-| `i`           | `i`            | `"say ""hi`     |
-| Closing quote | `"`            | `"say ""hi"`    |
-
-*/
 int csv_fwrite2 (FILE *fp, const void *src, size_t src_size, unsigned char quote)
 {
   const unsigned char *csrc = src;
