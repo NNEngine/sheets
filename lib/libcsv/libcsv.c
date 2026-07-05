@@ -20,19 +20,6 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 #include <assert.h>
 
 
-/*
-This is a portability shim(a small piece of code acting as a translation or
-compatibility layer) that ensures 'SIZE_MAX' is defined regardless of whether
-the compiler is using an old C standard or a modern one.
-
-=> __STDC_VERSION__ is a predefined macro that tells you which C standard the compiler supports.
-=> 199901L means C99 (ISO/IEC 9899:1999, published in 1999).
-=> If the compiler is C99 or later, include <stdint.h>, which is a standard header that defines
-   SIZE_MAX (the maximum value a size_t can hold).
-=> If the compiler is C89/C90 (which predates C99 and doesn't have <stdint.h>), manually define SIZE_MAX.
-=> ((size_t)-1) works because size_t is an unsigned integer type. In C, assigning -1 to an unsigned type
-   causes it to wrap around to its maximum possible value (all bits set to 1). This is guaranteed by the C standard.
-*/
 
 #if __STDC_VERSION__ >= 199901L
 #  include <stdint.h>
@@ -192,21 +179,6 @@ void csv_free(struct csv_parser *p)
   return;
 }
 
-/*
-This is the finalization function — it must be called when parsing is
-complete to flush any remaining data that wasn't delivered by csv_parse()
-(e.g., when a file doesn't end with a newline).
-
-Why csv_fini Exists: csv_parse() processes data in chunks. It only calls
-                  SUBMIT_ROW when it sees a line terminator (\r or \n).
-                  But what if the input ends without a final newline?
-name,age
-Alice,30
-Bob,25          ← no newline here
-
-Without csv_fini(), the Bob,25 row would never be delivered. csv_fini()
-forces delivery of the last pending field and row.
-*/
 
 int csv_fini(struct csv_parser *p, void (*cb1)(void *, size_t, void *), void (*cb2)(int c, void *), void *data)
 {
@@ -219,33 +191,13 @@ int csv_fini(struct csv_parser *p, void (*cb1)(void *, size_t, void *), void (*c
   size_t spaces = p->spaces;
   size_t entry_pos = p->entry_pos;
 
-  /*
-    This catches the case where the file ends inside a quoted field that never got its closing quote
-    Conditions:
-    => pstate == FIELD_BEGUN — we're actively inside a field
-    => p->quoted — it's a quoted field
-    => CSV_STRICT enabled — strict checking is on
-    => CSV_STRICT_FINI enabled — strict finalization is on
-    If all true, it's an error. Without CSV_STRICT_FINI, the parser would just accept
-    the truncated quoted field.
-  */
   if ((pstate == FIELD_BEGUN) && p->quoted && (p->options & CSV_STRICT) && (p->options & CSV_STRICT_FINI)) {
     /* Current field is quoted, no end-quote was seen, and CSV_STRICT_FINI is set */
     p->status = CSV_EPARSE;
     return -1;
   }
 
-  /*
-    The switch (pstate) — Handling Different End States
 
-    | State                    | Meaning                                                                                  | Action                                                          |
-    | ------------------------ | ---------------------------------------------------------------------------------------- | --------------------------------------------------------------- |
-    | `FIELD_MIGHT_HAVE_ENDED` | We saw a quote inside a quoted field and don't know if it ended the field or was literal | **Trim** trailing spaces + the quote, then submit field and row |
-    | `FIELD_NOT_BEGUN`        | We were between fields (e.g., after a comma)                                             | Submit empty field, then submit row                             |
-    | `FIELD_BEGUN`            | We were inside a field                                                                   | Submit the field, then submit row                               |
-    | `ROW_NOT_BEGUN`          | Row already properly ended                                                               | Nothing to do                                                   |
-
-  */
 
   switch (pstate) {
     case FIELD_MIGHT_HAVE_ENDED:
@@ -339,12 +291,6 @@ size_t csv_get_buffer_size(const struct csv_parser *p)
 }
 
 
-/*
-Increase the size of the entry buffer.  Attempt to increase size by
-=> p->blk_size, if this is larger than SIZE_MAX try to increase current
-=> buffer size to SIZE_MAX.  If allocation fails, try to allocate halve
-=> the size and try again until successful or increment size is zero.
-*/
 static int csv_increase_buffer(struct csv_parser *p)
 {
   if (p == NULL) return 0;
