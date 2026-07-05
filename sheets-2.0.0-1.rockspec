@@ -41,7 +41,7 @@ description = {
    ]],
 
    homepage = "https://github.com/NNEngine",
-   license = "MIT",
+   license = "MIT (includes LGPL-2.1 licensed libcsv)",
    maintainer = "Shivam Sharma"
 }
 
