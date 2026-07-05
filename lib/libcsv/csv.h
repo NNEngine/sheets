@@ -19,44 +19,19 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 
 
 
-#ifndef LIBCSV_H__ /* can also write LIBCSV_H, LIBCSV_H_ */
-#define LIBCSV_H__ /* can also write LIBCSV_H, LIBCSV_H_ */
+#ifndef LIBCSV_H__
+#define LIBCSV_H__
 
 
-/* Including Necessary Header Files*/
 #include <stdlib.h>
 #include <stdio.h>
 
 
-/* The following code allows C++ program to
-include and use a C header file without causing
-linker errors.
-
-=> __cpluplus is a special macro that is automatically
-defined only by C++ compilers. If you are compiling with
-a C compiler then this macro does not exist.
-
-=> extern "C" is a C++ specific keyword. It tell the
-C++ compiler to not apply C++ name mangling to the
-function declared inside these braces; treat them as
-C functions.
-
-=> #endif closes the preprocessor conditional.
-*/
 #ifdef __cplusplus
 extern "C" {
 #endif
 
 
-/* The followin three lines define the version
-number of the libcsv library.
-
-This follows the common MAJOR.MINOR.RELEASE versioning convention:
-=> MAJOR: incompatible API changes
-=> MINOR: added functionality (backward compatible)
-=> RELEASE/PATCH: bug fixes (backward compatible)
-
-*/
 #define CSV_MAJOR 3
 #define CSV_MINOR 0
 #define CSV_RELEASE 3

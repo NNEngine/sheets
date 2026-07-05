@@ -101,20 +101,6 @@ completed CSV field to the user's callback function*/
 */
 #define SUBMIT_CHAR(p, c) ((p)->entry_buf[entry_pos++] = (c))
 
-
-/*
-This array maps numeric error codes to human-readable error messages.
-It's used by csv_strerror() to convert error numbers into strings.
-
-| Index | String                                               | Error Macro    |
-| ----- | ---------------------------------------------------- | -------------- |
-| `0`   | `"success"`                                          | `CSV_SUCCESS`  |
-| `1`   | `"error parsing data while strict checking enabled"` | `CSV_EPARSE`   |
-| `2`   | `"memory exhausted while increasing buffer size"`    | `CSV_ENOMEM`   |
-| `3`   | `"data size too large"`                              | `CSV_ETOOBIG`  |
-| `4`   | `"invalid status code"`                              | `CSV_EINVALID` |
-
-*/
 static const char *csv_errors[] = {"success",
                                    "error parsing data while strict checking enabled",
                                    "memory exhausted while increasing buffer size",
@@ -122,16 +108,6 @@ static const char *csv_errors[] = {"success",
                                    "invalid status code"};
 
 
-
-/*
-This function retrieves the last error status from a csv_parser object:
-=> If p is NULL, the assertion fails and the program aborts with an error
-   message: "received null csv_parser"
-=> This catches programmer errors (passing a null pointer) during
-   development/debug builds
-=> In release builds, assert() typically does nothing (it's
-   compiled out when NDEBUG is defined)
-*/
 int csv_error(const struct csv_parser *p)
 {
   assert(p && "received null csv_parser");
@@ -141,10 +117,6 @@ int csv_error(const struct csv_parser *p)
 }
 
 
-/*
-This function converts a numeric error code into a human-readable
-string using the csv_errors lookup table.
-*/
 const char *csv_strerror(int status)
 {
   /* Return a textual description of status */
@@ -154,19 +126,6 @@ const char *csv_strerror(int status)
     return csv_errors[status];
 }
 
-/*
-This function retrieves the currently configured parser options
-from a csv_parser object.
-
-Returns the options field — a bitmask containing flags like
-CSV_STRICT, CSV_APPEND_NULL, CSV_EMPTY_IS_NULL, etc.
-
-You can test individual options with bitwise AND:
-int opts = csv_get_opts(&p);
-if (opts & CSV_STRICT) {
-    printf("Strict mode is enabled\n");
-}
-*/
 int csv_get_opts(const struct csv_parser *p)
 {
   /* Return the currently set options of parser */
@@ -177,13 +136,6 @@ int csv_get_opts(const struct csv_parser *p)
 }
 
 
-/*
-This function overwrites the parser's current option flags with a new set.
-
-This function replaces the entire options field, not just adds to it:
-csv_set_opts(&p, CSV_STRICT);         Only STRICT is now set
-csv_set_opts(&p, CSV_APPEND_NULL);    Only APPEND_NULL is now set — STRICT is LOST
-*/
 int csv_set_opts(struct csv_parser *p, unsigned char options)
 {
   /* Set the options */
@@ -195,30 +147,6 @@ int csv_set_opts(struct csv_parser *p, unsigned char options)
 }
 
 
-/*
-This is the constructor function that initializes a csv_parser
-object before use:
-
-| Field          | Value                    | Purpose                                                               |
-| -------------- | ------------------------ | --------------------------------------------------------------------- |
-| `entry_buf`    | `NULL`                   | Buffer not allocated yet — lazily created on first `csv_parse()` call |
-| `pstate`       | `ROW_NOT_BEGUN`          | Start at the beginning — no row in progress                           |
-| `quoted`       | `0`                      | Not inside a quoted field                                             |
-| `spaces`       | `0`                      | No trailing spaces accumulated                                        |
-| `entry_pos`    | `0`                      | Buffer is empty                                                       |
-| `entry_size`   | `0`                      | Buffer has 0 bytes allocated                                          |
-| `status`       | `0` (`CSV_SUCCESS`)      | No errors yet                                                         |
-| `options`      | User-provided            | Set from parameter (e.g., `CSV_STRICT`)                               |
-| `quote_char`   | `CSV_QUOTE` (0x22 = `"`) | Default double-quote                                                  |
-| `delim_char`   | `CSV_COMMA` (0x2c = `,`) | Default comma delimiter                                               |
-| `is_space`     | `NULL`                   | No custom space function — defaults to tab/space                      |
-| `is_term`      | `NULL`                   | No custom terminator function — defaults to CR/LF                     |
-| `blk_size`     | `MEM_BLK_SIZE` (128)     | Default 128-byte allocation chunks                                    |
-| `malloc_func`  | `NULL`                   | Not used (see header comment)                                         |
-| `realloc_func` | `realloc`                | Standard C `realloc()`                                                |
-| `free_func`    | `free`                   | Standard C `free()`                                                   |
-
-*/
 int csv_init(struct csv_parser *p, unsigned char options)
 {
   /* Initialize a csv_parser object returns 0 on success, -1 on error */
