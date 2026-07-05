@@ -536,3 +536,13 @@ MIT License.
 
 - `rgamble/libcsv`
 - Python `csv` module for API inspiration
+
+
+
+```
+This project is licensed under the MIT License.
+
+This repository also includes third-party code from libcsv
+(https://github.com/rgamble/libcsv), licensed under LGPL-2.1.
+See lib/libcsv/LICENSE for details.
+```
