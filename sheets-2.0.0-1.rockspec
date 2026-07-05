@@ -40,7 +40,7 @@ description = {
       Documentation: https://nnengine.github.io/sheets/
    ]],
 
-   homepage = "https://github.com/NNEngine",
+   homepage = "https://github.com/nnengine/sheets",
    license = "MIT (includes LGPL-2.1 licensed libcsv)",
    maintainer = "Shivam Sharma"
 }
