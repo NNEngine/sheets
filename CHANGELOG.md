@@ -143,4 +143,4 @@ end)
 
 ## License
 
-MIT License - See LICENSE file for details
+MIT (includes LGPL-2.1 licensed libcsv) License - See LICENSE file for details
