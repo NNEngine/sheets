@@ -348,7 +348,7 @@ sheets is built on three core principles:
 
 **sheets v2.0.0**
 
-Licensed under the MIT License. See LICENSE file for details.
+Licensed under the MIT ((includes LGPL-2.1 licensed libcsv)) License. See LICENSE file for details.
 
 ---
 
